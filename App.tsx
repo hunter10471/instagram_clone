@@ -5,6 +5,8 @@ import { Text, View } from 'react-native';
 import LandingScreen from './components/auth/LandingScreen';
 import RegisterScreen from './components/auth/RegisterScreen';
 import { getAuth } from './config/firebase/index';
+import { Provider } from 'react-redux';
+import MainScreen from './components/MainScreen';
 
 const Stack = createStackNavigator();
 

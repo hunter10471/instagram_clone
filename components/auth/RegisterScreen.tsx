@@ -3,10 +3,14 @@ import React, { useReducer, useState } from 'react';
 import {
   RegisterReducerAction,
   RegisterReducerState,
-} from '../../interfaces/Register.interface';
+} from '../../interfaces/Auth.interface';
 import {
+  collection,
   createUserWithEmailAndPassword,
+  doc,
   getAuth,
+  getFirestore,
+  setDoc,
 } from '../../config/firebase/index';
 
 type Props = {};
@@ -36,13 +40,14 @@ const RegisterScreen = (props: Props) => {
   const onSignUp = async () => {
     const { email, username, password } = state;
     const auth = getAuth();
+    const db = getFirestore();
+    const dbRef = doc(collection(db, 'users'), auth.currentUser?.uid);
     try {
-      const createUser = await createUserWithEmailAndPassword(
-        auth,
+      await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(dbRef, {
+        username,
         email,
-        password
-      );
-      console.log(createUser.user);
+      });
     } catch (error) {
       console.log(error);
     }

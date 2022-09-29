@@ -13,5 +13,12 @@ const firebaseConfig = {
 };
 
 export { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+export {
+  getFirestore,
+  collection,
+  setDoc,
+  doc,
+  getDoc,
+} from 'firebase/firestore';
 export const app = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(app);
