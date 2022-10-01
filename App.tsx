@@ -7,6 +7,8 @@ import RegisterScreen from './components/auth/RegisterScreen';
 import { getAuth } from './config/firebase/index';
 import { Provider } from 'react-redux';
 import MainScreen from './components/MainScreen';
+import { store } from './redux/store';
+import LoginScreen from './components/auth/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -31,17 +33,28 @@ export default function App() {
       </View>
     );
   }
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='LandingScreen'>
-        <Stack.Screen
-          component={LandingScreen}
-          name='LandingScreen'
-          options={{ headerShown: false }}
-        />
+  if (!loggedIn) {
+    return (
+      <NavigationContainer>
+        <Provider store={store}>
+          <Stack.Navigator initialRouteName='LandingScreen'>
+            <Stack.Screen
+              component={LandingScreen}
+              name='LandingScreen'
+              options={{ headerShown: false }}
+            />
 
-        <Stack.Screen component={RegisterScreen} name='RegisterScreen' />
-      </Stack.Navigator>
-    </NavigationContainer>
+            <Stack.Screen component={RegisterScreen} name='RegisterScreen' />
+            <Stack.Screen component={LoginScreen} name='LoginScreen' />
+          </Stack.Navigator>
+        </Provider>
+      </NavigationContainer>
+    );
+  }
+
+  return (
+    <Provider store={store}>
+      <MainScreen />
+    </Provider>
   );
 }

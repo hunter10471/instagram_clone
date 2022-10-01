@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useReducer } from 'react';
 import {
   LoginReducerAction,
-  LoginReducerState,
+  LoginState,
 } from '../../interfaces/Auth.interface';
 import { getAuth } from '../../config/firebase/index';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -14,7 +14,7 @@ const ReducerInitialState = {
   password: '',
 };
 
-const reducer = (state: LoginReducerState, action: LoginReducerAction) => {
+const reducer = (state: LoginState, action: LoginReducerAction) => {
   switch (action.type) {
     case 'email':
       return { ...state, email: action.payload };

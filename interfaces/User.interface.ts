@@ -1,5 +1,6 @@
 export interface UserData {
-  username: string;
+  id: string;
+  username: string | null;
   email: string;
 }
 
@@ -9,5 +10,5 @@ export interface ReduxUserInitialState {
 
 export interface ReduxUserAction {
   type: string;
-  payload: Partial<UserData>;
+  payload: UserData;
 }

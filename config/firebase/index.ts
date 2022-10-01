@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { REACT_APP_FIREBASE_API_KEY } from '@env';
 
 const firebaseConfig = {
-  apiKey: REACT_APP_FIREBASE_API_KEY,
+  apiKey: 'AIzaSyC_cWsAsxRoNZI24KVQtfTq - Xly0jlcCB4',
   authDomain: 'insta-clone-b1312.firebaseapp.com',
   projectId: 'insta-clone-b1312',
   storageBucket: 'insta-clone-b1312.appspot.com',
@@ -12,7 +12,11 @@ const firebaseConfig = {
   measurementId: 'G-2R09GZX3JZ',
 };
 
-export { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+export {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 export {
   getFirestore,
   collection,

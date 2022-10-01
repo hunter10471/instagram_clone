@@ -1,19 +1,11 @@
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import {
   RegisterReducerAction,
-  RegisterReducerState,
+  RegisterState,
 } from '../../interfaces/Auth.interface';
-import {
-  collection,
-  createUserWithEmailAndPassword,
-  doc,
-  getAuth,
-  getFirestore,
-  setDoc,
-} from '../../config/firebase/index';
-
-type Props = {};
+import { registerUser } from '../../redux/apiCalls/user/auth';
+import { useDispatch } from 'react-redux';
 
 const ReducerInitialState = {
   username: '',
@@ -21,10 +13,7 @@ const ReducerInitialState = {
   password: '',
 };
 
-const reducer = (
-  state: RegisterReducerState,
-  action: RegisterReducerAction
-) => {
+const reducer = (state: RegisterState, action: RegisterReducerAction) => {
   switch (action.type) {
     case 'username':
       return { ...state, username: action.payload };
@@ -35,22 +24,12 @@ const reducer = (
   }
 };
 
-const RegisterScreen = (props: Props) => {
+const RegisterScreen = () => {
   const [state, dispatch] = useReducer(reducer, ReducerInitialState);
+  const dispatchUser = useDispatch();
   const onSignUp = async () => {
     const { email, username, password } = state;
-    const auth = getAuth();
-    const db = getFirestore();
-    const dbRef = doc(collection(db, 'users'), auth.currentUser?.uid);
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(dbRef, {
-        username,
-        email,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await registerUser({ email, username, password }, dispatchUser);
   };
 
   return (
